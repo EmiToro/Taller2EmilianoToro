@@ -15,6 +15,15 @@ public class Gimnasio {
 		this.estado = "Sin derrotar";
 		this.pokemon = new ArrayList<>();
 	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public void agregarPokemon(Pokemon p) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

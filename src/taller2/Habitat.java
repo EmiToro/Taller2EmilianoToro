@@ -6,8 +6,7 @@ public class Habitat {
 	private String nombre;
 	private ArrayList<Pokemon> pokemonDispo;
 	
-	public Habitat(String nombre, ArrayList<Pokemon> pokemonDispo) {
-		super();
+	public Habitat(String nombre) {
 		this.nombre = nombre;
 		this.pokemonDispo = new ArrayList<>();
 	}
