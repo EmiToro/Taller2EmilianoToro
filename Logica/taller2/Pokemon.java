@@ -13,6 +13,7 @@ public class Pokemon {
 	private int defensaEspecial;
 	private int velocidad;
 	private String tipo;
+	private String estado;
 	private List<Habitat> habitats;
 	
 	public Pokemon(String nombre, String habitat, double porcentajeAparicion, int vida, int ataque, int defensa,
@@ -28,6 +29,7 @@ public class Pokemon {
 		this.defensaEspecial = defensaEspecial;
 		this.velocidad = velocidad;
 		this.tipo = tipo;
+		this.estado = "Vivo";
 		this.habitats = new ArrayList<Habitat>();
 		
 		
@@ -79,6 +81,12 @@ public class Pokemon {
 
 	public void addHabitats(Habitat h) {
 		this.habitats.add(h);
+	}
+	public boolean estaVivo() {
+		return estado.equals("Vivo");
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	
