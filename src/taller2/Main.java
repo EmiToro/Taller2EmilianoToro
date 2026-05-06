@@ -13,13 +13,45 @@ public class Main {
 	static Scanner s = new Scanner(System.in);
 	public static void main(String[] args) {
 	
-		System.out.println("--- Bienvenido al menu de Pokemon!! ---/n");
-		boolean salir = false;
+		int opcion;
+		do {
+			System.out.println("1) Continuar");
+			System.out.println("2) Nueva partida.");
+			System.out.println("3) Salir");
+			System.out.println("Ingrese una opcion: ");
+			opcion = s.nextInt();
+			s.nextLine();
+			switch(opcion) {
+			case 1:
+				
+				break;
+			case 2:
+				System.out.println("Ingrese apodo: ");
+				String apodo = s.nextLine();
+				System.out.println("Bienvenido " + apodo + "!!");
+				menu2(apodo);
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println();
+			}
+			
+		}while(opcion!= 3);
+	
 		leerArchivos();
 		
 		
 		
-		while(!salir) {
+	}
+
+	
+	
+	private static void menu2(String apodo) {
+		int opcion ;
+		do {
+			System.out.println(apodo + ", que deseas hacer?");
+			System.out.println();
 			System.out.println("1) Revisar equipo.");
 			System.out.println("2) Salir a capturar.");
 			System.out.println("3) Acceso al PC (cambiar Pokémon del equipo).");
@@ -28,15 +60,10 @@ public class Main {
 			System.out.println("6) Curar Pokémon.");
 			System.out.println("7) Guardar.");
 			System.out.println("8) Guardar y Salir.");
-			System.out.println("/n -Porfavor ingrese su opcion: ");
-			int opcion = s.nextInt(); 
+			System.out.println("\n Ingrese su opcion: ");
+			opcion = s.nextInt(); 
 			s.nextLine();
-			
-			while(opcion <= 0 || opcion > 8) {
-				System.out.println("ERROR, porfavor ingrese una opcion valida: ");
-				opcion = s.nextInt(); 
-				s.nextLine();
-			}
+				
 			
 			switch(opcion) {
 				case 1:
@@ -62,14 +89,16 @@ public class Main {
 					break;
 				case 8:
 					Guardar();
-					salir = true;
+					//salir = true;
 					break;
-			}
-		}
+				default:
+					System.out.println("Saliendo y guardando cambios.");
+			}		
+		}while(opcion != 8) ;
 	}
 
-	
-	
+
+
 	private static void leerArchivos() {
 		leerPoxedex("Pokedex.txt");
 		leerAltoMando("Alto Mando.txt");
