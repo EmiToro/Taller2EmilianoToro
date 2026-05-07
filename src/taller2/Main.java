@@ -327,7 +327,7 @@ public class Main {
 			System.out.println("Equipo actual: ");
 			int i = 1;
 			for(Pokemon p: jugador.getEquipo()) {
-				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.calcularStats() +"| Estado: " + p.getEstado());
+				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.CalcularStatsTotal() +"| Estado: " + p.getEstado());
 			}
 		}
 	}

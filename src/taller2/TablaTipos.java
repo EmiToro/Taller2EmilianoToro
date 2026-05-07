@@ -24,4 +24,54 @@ public class TablaTipos {
         {  1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5 }, // SINIESTRO
         {  1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 2.0, 1.0 }  // HADA
     };
+    
+    public static double obtenerMultiplicador(String tipoAtacante, String tipoDefensor) {
+        int fila = convertirTipoAIndice(tipoAtacante);
+        int columna = convertirTipoAIndice(tipoDefensor);
+        return EFECTIVIDAD[fila][columna];
+    }
+
+    private static int convertirTipoAIndice(String tipo) {
+        switch(tipo.toUpperCase()) {
+            case "NORMAL": 
+            		return 0;
+            case "FUEGO": 
+            		return 1;
+            case "AGUA": 
+            		return 2;
+            case "PLANTA": 
+            		return 3;
+            case "ELECTRICO": 
+            		return 4;
+            case "HIELO": 
+            		return 5;
+            case "LUCHA": 
+            		return 6;
+            case "VENENO": 
+            		return 7;
+            case "TIERRA": 
+            		return 8;
+            case "VOLADOR": 
+            		return 9;
+            case "PSIQUICO": 
+            		return 10;
+            case "BICHO": 
+            		return 11;
+            case "ROCA": 
+            		return 12;
+            case "FANTASMA": 
+            		return 13;
+            case "DRAGON": 
+            		return 14;
+            case "ACERO": 
+            		return 15;
+            case "SINIESTRO": 
+            		return 16;
+            case "HADA": 
+            		return 17;
+            default:
+            		System.out.println("No se ha podido convertir el tipo a String /n");
+            		return 0;
+        }
+    }
 }
