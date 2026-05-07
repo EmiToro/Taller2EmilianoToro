@@ -93,11 +93,9 @@ public class Pokemon {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public int calcularStats() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
+	public int CalcularStatsTotal() {
+	    return vida + ataque + defensa + ataqueEspecial + defensaEspecial + velocidad;
+	}
 	@Override
 	public String toString() {
 		return  nombre + " | " + tipo + " Stats: " + " | Estado: " + estado;

@@ -297,6 +297,9 @@ public class Main {
 		int opcion = s.nextInt();
 		if(opcion < 1 || opcion > habitats.size()) {
 			return;
+			
+			
+			
 		}
 		
 		Habitat zona = habitats.get(opcion - 1);
