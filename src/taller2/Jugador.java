@@ -8,11 +8,11 @@ public class Jugador {
 	private  ArrayList<Pokemon> equipo;
 	private  ArrayList<Pokemon> pc;
 	
-	public Jugador(String nombre, int medallas, ArrayList<Pokemon> equipo, ArrayList<Pokemon> pc) {
+	public Jugador(String nombre, int medallas) {
 		this.nombre = nombre;
 		this.medallas = medallas;
-		this.equipo = equipo;
-		this.pc = pc;
+		this.equipo = new ArrayList<>();
+		this.pc = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -29,6 +29,14 @@ public class Jugador {
 
 	public ArrayList<Pokemon> getPc() {
 		return pc;
+	}
+
+	public boolean tienePokemon(String n) {
+		return false;
+	}
+
+	public void agregarPokemon(Pokemon encontrado) {
+		
 	}
 	
 	

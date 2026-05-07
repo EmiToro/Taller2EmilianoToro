@@ -85,14 +85,25 @@ public class Pokemon {
 	public boolean estaVivo() {
 		return estado.equals("Vivo");
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public int calcularStats() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 
 	@Override
 	public String toString() {
 		return  nombre + " | " + tipo + " Stats: " + " | Estado: " + estado;
 	}
+
+	
 	
 	
 	

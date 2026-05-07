@@ -11,6 +11,8 @@ public class Main {
 	static ArrayList<Gimnasio> gimnasios = new ArrayList<>();
 	static ArrayList<AltoMando> altoMando = new ArrayList<>();
 	static Scanner s = new Scanner(System.in);
+	static Jugador jugador;
+	
 	public static void main(String[] args) {
 	
 		int opcion;
@@ -23,15 +25,23 @@ public class Main {
 			s.nextLine();
 			switch(opcion) {
 			case 1:
-				
+				jugador = Registro.cargarRegistros("Registros.txt", pokedex);
+				if(jugador == null) {
+					System.out.println("No hay partida guardada. Cree una nueva partida. ");
+				}else {
+					System.out.println("Bienvenido de nuevo " + jugador.getNombre() + "!");
+					menu2(jugador.getNombre());
+				}
 				break;
 			case 2:
 				System.out.println("Ingrese apodo: ");
 				String apodo = s.nextLine();
+				jugador = new Jugador(apodo, 0);
 				System.out.println("Bienvenido " + apodo + "!!");
 				menu2(apodo);
 				break;
 			case 3:
+				
 				break;
 			default:
 				System.out.println();
@@ -243,13 +253,43 @@ public class Main {
 	}
 
 	private static void salirCapturar() {
-		// TODO Auto-generated method stub
+		System.out.println("Zonas disponibles: ");
+		for(int i = 0; i< habitats.size(); i++) {
+			System.out.println((i + 1) + ")" + habitats.get(i).getNombre());
+		}
+		int opcion = s.nextInt();
+		if(opcion < 1 || opcion > habitats.size()) {
+			return;
+		}
 		
+		Habitat zona = habitats.get(opcion - 1);
+		Pokemon encontrado = zona.generarPokemonA(pokedex);
+		System.out.println("Oh!! Ha aparecido un increible " + encontrado.getNombre() + "!!");
+		System.out.println("1) Capturar");
+		System.out.println("2) Huir");
+		int decision = s.nextInt();
+		if(decision == 1) {
+			if(!jugador.tienePokemon(encontrado.getNombre())) {
+				jugador.agregarPokemon(encontrado);
+				System.out.println(encontrado.getNombre() + " capturado con exito!! ");
+			}else {
+				System.out.println("Ya tienes a " + encontrado.getNombre());
+			}
+		}else {
+			System.out.println("Has huido...");
+		}
 	}
 
 	private static void revisarEquipo() {
-		// TODO Auto-generated method stub
-		
+		if(jugador.getEquipo().isEmpty()) {
+			System.out.println("Tu equipo esta vacío. ");
+		}else {
+			System.out.println("Equipo actual: ");
+			int i = 1;
+			for(Pokemon p: jugador.getEquipo()) {
+				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.calcularStats() +"| Estado: " + p.getEstado());
+			}
+		}
 	}
 
 }
