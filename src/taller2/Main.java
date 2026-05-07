@@ -311,9 +311,9 @@ public class Main {
 		if(decision == 1) {
 			if(!jugador.tienePokemon(encontrado.getNombre())) {
 				jugador.agregarPokemon(encontrado);
-				System.out.println(encontrado.getNombre() + " capturado con exito!! ");
+				System.out.println(encontrado.getNombre() + " capturado con exito!!");
 			}else {
-				System.out.println("Ya tienes a " + encontrado.getNombre());
+				System.out.println("Ya tienes a " + encontrado.getNombre()+ "en tu equipo!");
 			}
 		}else {
 			System.out.println("Has huido...");

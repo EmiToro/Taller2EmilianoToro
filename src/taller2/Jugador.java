@@ -35,8 +35,8 @@ public class Jugador {
 		return false;
 	}
 
-	public void agregarPokemon(Pokemon encontrado) {
-		
+	public void agregarPokemon(Pokemon p) {
+		equipo.add(p);
 	}
 
 	public void curarEquipo() {
