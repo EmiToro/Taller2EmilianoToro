@@ -1,8 +1,13 @@
 package taller2;
 
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Main {
@@ -203,8 +208,12 @@ public class Main {
 
 
 
-	private static Pokemon buscarPokemon(String nombrePokemon, ArrayList<Pokemon> pokedex2) {
-		// TODO Auto-generated method stub
+	private static Pokemon buscarPokemon(String nombrePokemon, ArrayList<Pokemon> pokedex) {
+		for(Pokemon p: pokedex) {
+			if(p.getNombre().equalsIgnoreCase(nombrePokemon)) {
+				return p;
+			}
+		}
 		return null;
 	}
 
@@ -228,13 +237,26 @@ public class Main {
 
 
 	private static void Guardar() {
-		// TODO Auto-generated method stub
-		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt"))){
+			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			bw.newLine();
+			for(Pokemon p: jugador.getEquipo()) {
+				bw.write(p.getNombre() + ";" + p.getEstado());
+				bw.newLine();
+			}
+			for(Pokemon p : jugador.getPc()) {
+				bw.write(p.getNombre() + ";" + p.getEstado());
+				bw.newLine();
+			}
+			System.out.println("Partida guardada!");
+		}catch(IOException e) {
+			System.out.println("Error al guardar partida.");
+		}
 	}
 
 	private static void curarPkm() {
-		// TODO Auto-generated method stub
-		
+		jugador.curarEquipo();
+		System.out.println("Tu equipo se ha recuperado!");
 	}
 
 	private static void desafiarAltoMando() {
@@ -248,8 +270,23 @@ public class Main {
 	}
 
 	private static void accesoPC() {
-		// TODO Auto-generated method stub
+		System.out.println("Pokemon en PC: ");
+		for(int i = 0; i< jugador.getPc().size(); i++) {
+			System.out.println(( i + 1) + ") " + jugador.getPc().get(i).getNombre());
+		}
 		
+		System.out.println("¿Quieres cambiar un Pokemon? ");
+		System.out.println("(1 = Si, 2 = No)");
+		int opcion = s.nextInt();
+		if(opcion == 1) {
+			System.out.println("Numero del pokemon en el equipo: ");
+			int posEquipo = s.nextInt() - 1;
+			System.out.println("Numero del pokemon en el PC:");
+			int posPC = s.nextInt();
+			s.nextLine();
+			jugador.cambiarPokemon(posEquipo, posPC);
+			System.out.println("Cambio realizado!");
+		}
 	}
 
 	private static void salirCapturar() {

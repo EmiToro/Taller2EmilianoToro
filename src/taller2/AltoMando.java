@@ -14,7 +14,6 @@ public class AltoMando {
 	}
 
 	public void agregarPokemon(Pokemon p) {
-		// TODO Auto-generated method stub
 		
 	}
 	

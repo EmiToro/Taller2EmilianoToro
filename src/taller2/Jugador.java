@@ -38,6 +38,14 @@ public class Jugador {
 	public void agregarPokemon(Pokemon encontrado) {
 		
 	}
+
+	public void curarEquipo() {
+		
+	}
+
+	public void cambiarPokemon(int posEquipo, int posPC) {
+		
+	}
 	
 	
 }
