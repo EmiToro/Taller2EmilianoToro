@@ -498,6 +498,7 @@ public class Main {
 		System.out.print("Ingrese Zona: ");
 		int opcion = s.nextInt(); s.nextLine();
 		if(opcion < 1 || opcion > habitats.size()) {
+			System.out.println("Escoja una zona valida porfavor, volviendo al menu... ");
 			return;
 		}
 		
