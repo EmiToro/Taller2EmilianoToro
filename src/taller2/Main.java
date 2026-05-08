@@ -474,7 +474,6 @@ public class Main {
 		    System.out.print(" Ingrese opcion valida: ");
 		    opcion = s.nextInt();
 		    s.nextLine();
-	    	
 	    }
 	    
 	    if(opcion == 1) {
