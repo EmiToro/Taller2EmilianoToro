@@ -43,7 +43,7 @@ Archivos externos utilizados:
 ##  Instrucciones de ejecución
 1. Clonar el repositorio desde GitHub:
    ```bash
-   git clone 
+   git clone https://github.com/EmiToro/Taller2EmilianoToroConstanzaAraya.git
  
 2. Abrir el proyecto en Eclipse (o cualquier IDE compatible con Java).
 3. Asegurarse de que los archivos externos(Pokedex.txt, Habitats.txt, Gimnasios.txt, Alto Mando.txt) esten en la carpeta raíz del proyecto.
