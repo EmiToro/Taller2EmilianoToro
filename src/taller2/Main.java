@@ -469,6 +469,15 @@ public class Main {
 	    System.out.print(" Ingrese opcion: ");
 	    int opcion = s.nextInt();
 	    s.nextLine();
+	    
+	    while(opcion <= 0) {
+		    System.out.print(" Ingrese opcion valida: ");
+		    opcion = s.nextInt();
+		    s.nextLine();
+	    	
+	    }
+	 
+	    
 	    if(opcion == 1) {
 	        System.out.println("Número del pokemon en el equipo : ");
 	        int posEquipo = s.nextInt() - 1;
@@ -482,6 +491,10 @@ public class Main {
 	        } else {
 	            System.out.println("Posición inválida.");
 	        }
+	    }else if(opcion == 2) {
+	    	System.out.println("Saliendo y volviendo al menu... \n");
+	    	return;
+	    	
 	    }
 	}
     /** Permite salir a capturar Pokémon en los hábitats disponibles. */
