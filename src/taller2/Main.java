@@ -339,7 +339,7 @@ public class Main {
 			System.out.println(g.getNumero() + ") " + g.getLider() + "- Estado: " + g.getEstado());
 		}
 		System.out.println((gimnasios.size() + 1) + ") Volver al menu");
-		int opcion = s.nextInt();
+		int opcion = s.nextInt(); s.nextLine();
 		if(opcion < 1 || opcion > gimnasios.size()) {
 			return;
 		}
@@ -391,29 +391,72 @@ public class Main {
 					}
 				}
 			}			
-			gym.setEstado("Derrotado");
-			jugador.setMedallas(jugador.getMedallas() + 1);
-			System.out.println("Has ganado la medalla de " + gym.getLider() + "!");
+		    if(!gym.getEstado().equals("Derrotado")) {
+	              gym.setEstado("Derrotado");
+	              jugador.setMedallas(jugador.getMedallas() + 1);
+	              System.out.println("¡Has ganado la medalla de " + gym.getLider() + "!");
+	          }
 		}
 
 	private static void accesoPC() {
-		System.out.println("Pokemon en PC: ");
-		for(int i = 0; i< jugador.getPc().size(); i++) {
-			System.out.println(( i + 1) + ") " + jugador.getPc().get(i).getNombre());
-		}
-		
-		System.out.println("¿Quieres cambiar un Pokemon? ");
-		System.out.println("(1 = Si, 2 = No)");
-		int opcion = s.nextInt();
-		if(opcion == 1) {
-			System.out.println("Numero del pokemon en el equipo: ");
-			int posEquipo = s.nextInt() - 1;
-			System.out.println("Numero del pokemon en el PC:");
-			int posPC = s.nextInt() - 1;
-			s.nextLine();
-			jugador.cambiarPokemon(posEquipo, posPC);
-			System.out.println("Cambio realizado!");
-		}
+	    System.out.println("--- Sistema PC Pokemon --- \n");
+	    System.out.println("-Equipo activo-");
+	    System.out.println("----------------------------------------------------");
+	    
+	    if(jugador.getEquipo().isEmpty()) {
+	        System.out.println("(Sin pokemon en el equipo) \n");
+	    } else {
+	        for(int i = 0; i < jugador.getEquipo().size(); i++) {
+	            Pokemon p = jugador.getEquipo().get(i);
+	            String estado;
+	            if(p.estaVivo()) {
+	                estado = "Vivo";
+	            } else {
+	                estado = "Debilitado";
+	            }
+	            System.out.println("  " + (i + 1) + ") " + p.getNombre() 
+	                + " [" + p.getTipo() + "]"
+	                + "  |  Stats: " + p.CalcularStatsTotal()
+	                + "  |  " + estado);
+	        }
+	    }
+	    System.out.println("");
+	    System.out.println("--- Pokemon Center --- \n");
+	    System.out.println("----------------------------------------------------");
+	    if(jugador.getPc().isEmpty()) {
+	        System.out.println("  (El PC está vacío) \n");
+	    } else {
+	        for(int i = 0; i < jugador.getPc().size(); i++) {
+	            Pokemon p = jugador.getPc().get(i);
+	            String estado = p.estaVivo() ? "Vivo" : "Debilitado";
+	            System.out.println("  " + (i + 1) + ") " + p.getNombre()
+	                + " [" + p.getTipo() + "]"
+	                + "  |  Stats: " + p.CalcularStatsTotal()
+	                + "  |  " + estado);
+	        }
+	    }
+	    
+	    System.out.println("");
+	    System.out.println("¿Qué deseas hacer?");
+	    System.out.println("1) Intercambiar Pokemon entre equipo y PC");
+	    System.out.println("2) Salir del PC");
+	    System.out.print(" Ingrese opcion: ");
+	    int opcion = s.nextInt();
+	    s.nextLine();
+	    if(opcion == 1) {
+	        System.out.println("Número del pokemon en el equipo : ");
+	        int posEquipo = s.nextInt() - 1;
+	        System.out.println("Número del pokemon en el PC: ");
+	        int posPC = s.nextInt() - 1;
+	        s.nextLine();
+	        if(posEquipo >= 0 && posEquipo < jugador.getEquipo().size() 
+	                && posPC >= 0 && posPC < jugador.getPc().size()) {
+	            jugador.cambiarPokemon(posEquipo, posPC);
+	            System.out.println("¡Cambio realizado!");
+	        } else {
+	            System.out.println("Posición inválida.");
+	        }
+	    }
 	}
 
 	private static void salirCapturar() {
@@ -421,12 +464,9 @@ public class Main {
 		for(int i = 0; i< habitats.size(); i++) {
 			System.out.println((i + 1) + ")" + habitats.get(i).getNombre());
 		}
-		int opcion = s.nextInt();
+		int opcion = s.nextInt(); s.nextLine();
 		if(opcion < 1 || opcion > habitats.size()) {
 			return;
-			
-			
-			
 		}
 		
 		Habitat zona = habitats.get(opcion - 1);
@@ -434,7 +474,7 @@ public class Main {
 		System.out.println("Oh!! Ha aparecido un increible " + encontrado.getNombre() + "!!");
 		System.out.println("1) Capturar");
 		System.out.println("2) Huir");
-		int decision = s.nextInt();
+		int decision = s.nextInt(); s.nextLine();
 		if(decision == 1) {
 			if(!jugador.tienePokemon(encontrado.getNombre())) {
 				jugador.agregarPokemon(encontrado);
@@ -455,6 +495,7 @@ public class Main {
 			int i = 1;
 			for(Pokemon p: jugador.getEquipo()) {
 				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.CalcularStatsTotal() +"| Estado: " + p.getEstado());
+				i++;
 			}
 		}
 	}
