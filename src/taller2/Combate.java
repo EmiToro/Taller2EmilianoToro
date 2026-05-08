@@ -13,12 +13,11 @@ public class Combate {
         int statsAtacante = atacante.CalcularStatsTotal();
         int statsDefensor = defensor.CalcularStatsTotal();
 
-        double multiplicador = TablaTipos.obtenerMultiplicador(atacante.getTipo(), defensor.getTipo());
-        statsAtacante = (int)( statsAtacante * multiplicador);
-
         System.out.println(atacante.getNombre() + " -> " + statsAtacante + " puntos");
         System.out.println(defensor.getNombre() + " -> " + statsDefensor + " puntos");
-        
+
+        double multiplicador = TablaTipos.obtenerMultiplicador(atacante.getTipo(), defensor.getTipo());
+
         if (multiplicador == 2.0) {
             System.out.println("\n¡" + atacante.getNombre() + " es super efectivo contra " + defensor.getNombre() + "!");
         } else if (multiplicador == 0.5) {
@@ -26,24 +25,24 @@ public class Combate {
         } else if (multiplicador == 0.0) {
             System.out.println("\n¡El ataque de " + atacante.getNombre() + " no tiene efecto sobre " + defensor.getNombre() + "!");
         }
- 
-        if (multiplicador != 1.0) {
-            int nuevoStats = (int)(statsAtacante * multiplicador);
-            System.out.println("Nuevo puntaje!!:");
-            System.out.println(atacante.getNombre() + " -> " + nuevoStats + " puntos");
-            System.out.println(defensor.getNombre() + " -> " + statsDefensor + " puntos");
-            statsAtacante = nuevoStats;
-        }
- 
-        System.out.println();
 
+        if (multiplicador != 1.0) {
+            statsAtacante = (int)(statsAtacante * multiplicador); // solo aquí, UNA vez
+            System.out.println("Nuevo puntaje:");
+            System.out.println(atacante.getNombre() + " -> " + statsAtacante + " puntos");
+            System.out.println(defensor.getNombre() + " -> " + statsDefensor + " puntos");
+        }
+
+        System.out.println();
 
         if (statsAtacante > statsDefensor) {
             defensor.setEstado("Debilitado");
-            return atacante.getNombre() + " ha ganado!";
+            return defensor.getNombre() + " ha sido derrotado...";
         } else {
             atacante.setEstado("Debilitado");
-            return defensor.getNombre() + " ha ganado!";
+            return atacante.getNombre() + " ha sido derrotado...";
         }
+    
     }
+    
 }

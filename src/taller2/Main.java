@@ -19,7 +19,7 @@ public class Main {
 	static Jugador jugador;
 	
 	public static void main(String[] args) {
-	
+		leerArchivos();
 		int opcion;
 		do {
 			System.out.println("1) Continuar");
@@ -54,7 +54,7 @@ public class Main {
 			
 		}while(opcion!= 3);
 	
-		leerArchivos();
+
 		
 		
 		
@@ -288,8 +288,93 @@ public class Main {
 	}
 
 	private static void desafiarAltoMando() {
-		// TODO Auto-generated method stub
-		
+	    int medallas = jugador.getMedallas();
+	    if (medallas < 8) {
+	        System.out.println("¡Necesitas 8 medallas para desafiar al Alto Mando!");
+	        System.out.println("Medallas actuales: " + medallas + "/8");
+	        return;
+	    }
+
+	    if (!tieneEquipoVivo()) {
+	        System.out.println("¡No tienes pokémon disponibles para combatir!");
+	        return;
+	    }
+
+	    System.out.println("\n¡Has llegado al Alto Mando! No podrás volver al menú hasta ganar o perder.\n");
+
+	    for (AltoMando miembro : altoMando) {
+	        if (!tieneEquipoVivo()) {
+	            System.out.println("¡Te has quedado sin pokémon! Volviendo al menú...");
+	            return;
+	        }
+
+	        System.out.println("Desafiando a " + miembro.getNombre() + "!!");
+
+	        for (Pokemon pRival : miembro.getPokemon()) {
+	            Pokemon pJugador = null;
+	            for (Pokemon pj : jugador.getEquipo()) {
+	                if (pj.estaVivo()) { pJugador = pj; break; }
+	            }
+	            if (pJugador == null) {
+	                System.out.println("¡Te has quedado sin pokémon!");
+	                return;
+	            }
+
+	            System.out.println(miembro.getNombre() + " saca a " + pRival.getNombre() + "!");
+	            System.out.println(jugador.getNombre() + " saca a " + pJugador.getNombre() + "!");
+
+	            boolean pokemonDerrotado = false;
+	            while (!pokemonDerrotado) {
+	                System.out.println("\n¿Que deseas hacer?");
+	                System.out.println("1) Atacar");
+	                System.out.println("2) Cambiar de Pokemon");
+	                System.out.println("3) Rendirse");
+	                int accion = s.nextInt();
+	                s.nextLine();
+
+	                if (accion == 1) {
+	                    Combate combate = new Combate(pJugador, pRival);
+	                    System.out.println(combate.simularBatalla());
+	                    pokemonDerrotado = true;
+	                } else if (accion == 2) {
+	                    System.out.println("Elige otro Pokemon: ");
+	                    for (int i = 0; i < jugador.getEquipo().size(); i++) {
+	                        Pokemon pej = jugador.getEquipo().get(i);
+	                        System.out.println((i + 1) + ") " + pej.getNombre() + " - " + pej.getEstado());
+	                    }
+	                    int nuevo = s.nextInt() - 1;
+	                    s.nextLine();
+	                    if (nuevo >= 0 && nuevo < jugador.getEquipo().size()
+	                            && jugador.getEquipo().get(nuevo).estaVivo()) {
+	                        pJugador = jugador.getEquipo().get(nuevo);
+	                        System.out.println(jugador.getNombre() + " cambia a " + pJugador.getNombre() + "!");
+	                    } else {
+	                        System.out.println("No puedes elegir ese Pokemon.");
+	                    }
+	                } else if (accion == 3) {
+	                    System.out.println("Te has rendido... Volviendo al menú.");
+	                    return;
+	                }
+	            }
+
+	            if (!tieneEquipoVivo()) {
+	                System.out.println("¡Te has quedado sin pokémon! Volviendo al menú...");
+	                return;
+	            }
+	        }
+	        System.out.println("¡Has derrotado a " + miembro.getNombre() + "!");
+	    }
+
+	    System.out.println("\n¡FELICIDADES " + jugador.getNombre() + "!");
+	    System.out.println("¡Has derrotado al Alto Mando y eres el nuevo Campeón Pokémon!");
+	}
+
+	// Método auxiliar para no repetir código
+	private static boolean tieneEquipoVivo() {
+	    for (Pokemon p : jugador.getEquipo()) {
+	        if (p.estaVivo()) return true;
+	    }
+	    return false;
 	}
 
 	private static void retarGym() {
@@ -409,6 +494,7 @@ public class Main {
 			int i = 1;
 			for(Pokemon p: jugador.getEquipo()) {
 				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.CalcularStatsTotal() +"| Estado: " + p.getEstado());
+				i++;
 			}
 		}
 	}
