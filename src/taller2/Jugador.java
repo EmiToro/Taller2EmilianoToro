@@ -22,6 +22,11 @@ public class Jugador {
 	public int getMedallas() {
 		return medallas;
 	}
+	
+
+	public void setMedallas(int medallas) {
+		this.medallas = medallas;
+	}
 
 	public ArrayList<Pokemon> getEquipo() {
 		return equipo;
@@ -32,19 +37,39 @@ public class Jugador {
 	}
 
 	public boolean tienePokemon(String n) {
+		for(Pokemon p: equipo) {
+			if(p.getNombre().equalsIgnoreCase(n)) {
+				return true;
+			}
+		}
+		for(Pokemon p : pc) {
+			if(p.getNombre().equalsIgnoreCase(n)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public void agregarPokemon(Pokemon p) {
-		equipo.add(p);
+		if(equipo.size() < 6) {
+			equipo.add(p);
+		}else {
+			pc.add(p);
+		}
 	}
 
 	public void curarEquipo() {
-		
+		for(Pokemon p : equipo) {
+			p.setEstado("Vivo");
+		}for(Pokemon p : pc) {
+			p.setEstado("Vivo");
+		}
 	}
 
 	public void cambiarPokemon(int posEquipo, int posPC) {
-		
+		Pokemon t = equipo.get(posEquipo);
+		equipo.set(posEquipo, pc.get(posPC));
+		pc.set(posPC, t);
 	}
 	
 	

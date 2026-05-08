@@ -12,9 +12,17 @@ public class AltoMando {
 		this.nombre = nombre;
 		this.pokemon = new ArrayList<>();
 	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public ArrayList<Pokemon> getPokemon() {
+		return pokemon;
+	}
 
 	public void agregarPokemon(Pokemon p) {
-		
+		pokemon.add(p);
 	}
 	
 	

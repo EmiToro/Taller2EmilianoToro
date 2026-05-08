@@ -14,7 +14,7 @@ public class Combate {
         int statsDefensor = defensor.CalcularStatsTotal();
 
         double multiplicador = TablaTipos.obtenerMultiplicador(atacante.getTipo(), defensor.getTipo());
-        statsAtacante *= multiplicador;
+        statsAtacante = (int)( statsAtacante * multiplicador);
 
         System.out.println(atacante.getNombre() + " -> " + statsAtacante + " puntos");
         System.out.println(defensor.getNombre() + " -> " + statsDefensor + " puntos");

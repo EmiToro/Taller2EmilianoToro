@@ -43,8 +43,4 @@ public class Habitat {
 		return candidatos.get(rand.nextInt(candidatos.size()));
 	}
 
-
-	
-	
-	
 }

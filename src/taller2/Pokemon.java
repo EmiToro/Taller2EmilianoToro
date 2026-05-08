@@ -100,15 +100,6 @@ public class Pokemon {
 	public String toString() {
 		return  nombre + " | " + tipo + " Stats: " + " | Estado: " + estado;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

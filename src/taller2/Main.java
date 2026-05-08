@@ -30,7 +30,7 @@ public class Main {
 			s.nextLine();
 			switch(opcion) {
 			case 1:
-				jugador = Registro.cargarRegistros("Registros.txt", pokedex);
+				jugador = cargarRegistros("Registros.txt", pokedex);
 				if(jugador == null) {
 					System.out.println("No hay partida guardada. Cree una nueva partida. ");
 				}else {
@@ -62,6 +62,34 @@ public class Main {
 
 	
 	
+	private static Jugador cargarRegistros(String archivo, ArrayList<Pokemon> pokedex) {
+		try(Scanner sc = new Scanner(new File(archivo))){
+			if(!sc.hasNextLine()) {
+				return null;
+			}
+			String[] primera = sc.nextLine().split(";");
+			String nombre = primera[0];
+			int medallas = Integer.parseInt(primera[1]);
+			Jugador jugador = new Jugador(nombre, medallas);
+			
+			while(sc.hasNextLine()) {
+				String[] partes = sc.nextLine().split(";");
+				String nombrePokemon = partes[0];
+				String estado = partes[1];
+				Pokemon p = buscarPokemon(nombrePokemon, pokedex);
+				if( p != null) {
+					p.setEstado(estado);
+					jugador.agregarPokemon(p);
+				}
+			}
+			return jugador;
+		}catch(Exception e) {
+			System.out.println("Error al cargar registros!!!");
+			return null;
+		}
+		
+	}
+
 	private static void menu2(String apodo) {
 		int opcion ;
 		do {
@@ -265,8 +293,61 @@ public class Main {
 	}
 
 	private static void retarGym() {
-		// TODO Auto-generated method stub
+		System.out.println("¿A cual lider deseas retar?");
+		for(Gimnasio g: gimnasios) {
+			System.out.println(g.getNumero() + ") " + g.getLider() + "- Estado: " + g.getEstado());
+		}
+		System.out.println((gimnasios.size() + 1) + ") Volver al menu");
+		int opcion = s.nextInt();
+		if(opcion < 1 || opcion > gimnasios.size()) {
+			return;
+		}
+		Gimnasio gym = gimnasios.get(opcion - 1);
+		if(!gym.puedeRetar(jugador, gimnasios)){
+			System.out.println("Calmado Entrenador!!! No puedes retar a " + gym.getLider() + " sin haber derrotado a los anteriores!");
+			return;
+		}
 		
+		System.out.println("Desafiando a " + gym.getLider() + "!!");
+		for(Pokemon pGym : gym.getPokemon()) {
+			Pokemon pJugador = null;
+			for(Pokemon pj : jugador.getEquipo()) {
+				if(pj.estaVivo()) {
+					pJugador = pj;
+					break;
+				}
+			}
+			if(pJugador == null) {
+				System.out.println("Te has quedado sin Pokemon en tu equipo!");
+				return;
+			}
+			System.out.println(gym.getLider() + " saca a " + pGym.getNombre());
+			System.out.println(jugador.getNombre() + " saca a " + pJugador.getNombre());
+			System.out.println("¿Que deseas hacer?\n1) Atacar\2) Cambiar de Pokemon\n3 Rendirse");
+			int accion = s.nextInt();
+			s.nextLine();
+			if(accion == 1) {
+				Combate combate = new Combate(pJugador, pGym);
+				System.out.println(combate.simularBatalla());
+			}else if(accion == 2) {
+				System.out.println("Elige otro Pokemon del equipo: ");
+				for(int i = 0; i< jugador.getEquipo().size(); i++) {
+					System.out.println((i + 1) + ") " + jugador.getEquipo().get(i).getNombre());
+				}
+				int nuevo = s.nextInt() - 1;
+				if(nuevo >= 0 && nuevo < jugador.getEquipo().size()) {
+					pJugador = jugador.getEquipo().get(nuevo);
+					Combate combate = new Combate(pJugador, pGym);
+					System.out.println(combate.simularBatalla());
+				}
+			}else {
+				System.out.println("Te has rendido...");
+				return;
+			}
+		}
+		gym.setEstado("Derrotado");
+		jugador.setMedallas(jugador.getMedallas() + 1);
+		System.out.println("Has ganado la medalla de " + gym.getLider() + "!");
 	}
 
 	private static void accesoPC() {

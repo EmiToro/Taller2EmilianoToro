@@ -9,11 +9,26 @@ public class Gimnasio {
 	private  ArrayList<Pokemon> pokemon;
 	
 	public Gimnasio(int numero, String lider) {
-		super();
 		this.numero = numero;
 		this.lider = lider;
 		this.estado = "Sin derrotar";
 		this.pokemon = new ArrayList<>();
+	}
+	
+	public int getNumero() {
+		return numero;
+	}
+
+	public String getLider() {
+		return lider;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public ArrayList<Pokemon> getPokemon() {
+		return pokemon;
 	}
 
 	public void setEstado(String estado) {
@@ -21,8 +36,16 @@ public class Gimnasio {
 	}
 
 	public void agregarPokemon(Pokemon p) {
-		// TODO Auto-generated method stub
-		
+		pokemon.add(p);
+	}
+	
+	public boolean puedeRetar(Jugador jugador, ArrayList<Gimnasio> gimnasios) {
+		for(int i = 0 ; i< numero - 1; i++) {
+			if(!gimnasios.get(i).getEstado().equalsIgnoreCase("Derrotado")) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	
