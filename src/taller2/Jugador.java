@@ -11,6 +11,7 @@ public class Jugador {
 	private  int medallas;
 	private  ArrayList<Pokemon> equipo;
 	private  ArrayList<Pokemon> pc;
+	private  ArrayList<String> derrotados;
 	/**
      * Constructor de Jugador.
      * @param nombre Nombre del jugador.
@@ -21,6 +22,8 @@ public class Jugador {
 		this.medallas = medallas;
 		this.equipo = new ArrayList<>();
 		this.pc = new ArrayList<>();
+		this.derrotados = new ArrayList<>();
+		
 	}
     /** @return Nombre del jugador. */
 	public String getNombre() {
@@ -43,8 +46,12 @@ public class Jugador {
 	public ArrayList<Pokemon> getPc() {
 		return pc;
 	}
-
-    /**
+	
+	/** @return Lista de Derrotados en combates. */
+    public ArrayList<String> getDerrotados() {
+		return derrotados;
+	}
+	/**
      * Verifica si el jugador ya posee un Pokémon por nombre.
      * @param n Nombre del Pokémon.
      * @return true si ya lo tiene, false en caso contrario.
@@ -91,6 +98,8 @@ public class Jugador {
 		equipo.set(posEquipo, pc.get(posPC));
 		pc.set(posPC, t);
 	}
-	
+	public void agregarDerrotado(String lider) {
+		derrotados.add(lider);
+	}
 	
 }

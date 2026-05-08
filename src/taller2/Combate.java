@@ -39,7 +39,13 @@ public class Combate {
         } else if (multiplicador == 0.0) {
             System.out.println("¡El ataque de " + atacante.getNombre() + " no tiene efecto sobre " + defensor.getNombre() + "!");
         }
-
+        // Mostrar nuevo puntaje si el multiplicador no es neutro
+        if (multiplicador != 1.0) {
+            int nuevoStats = (int)(statsAtacante);
+            System.out.println("Nuevo puntaje:");
+            System.out.println(atacante.getNombre() + " -> " + nuevoStats + " puntos");
+            System.out.println(defensor.getNombre() + " -> " + statsDefensor + " puntos");
+        }
         if (statsAtacante > statsDefensor) {
             defensor.setEstado("Debilitado");
             return atacante.getNombre() + " ha ganado!";

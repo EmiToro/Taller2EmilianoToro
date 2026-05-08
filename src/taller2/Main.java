@@ -37,7 +37,7 @@ public class Main {
 			System.out.println("1) Continuar");
 			System.out.println("2) Nueva partida.");
 			System.out.println("3) Salir");
-			System.out.println("Ingrese una opcion: ");
+			System.out.print("Ingrese una opcion: ");
 			opcion = s.nextInt();
 			s.nextLine();
 			switch(opcion) {
@@ -51,8 +51,9 @@ public class Main {
 				}
 				break;
 			case 2:
-				System.out.println("Ingrese apodo: ");
+				System.out.print("Ingrese apodo: ");
 				String apodo = s.nextLine();
+				System.out.println();
 				jugador = new Jugador(apodo, 0);
 				System.out.println("Bienvenido " + apodo + "!!");
 				menu2(apodo);
@@ -105,6 +106,7 @@ public class Main {
 	private static void menu2(String apodo) {
 		int opcion ;
 		do {
+			System.out.println();
 			System.out.println(apodo + ", que deseas hacer?");
 			System.out.println();
 			System.out.println("1) Revisar equipo.");
@@ -115,7 +117,7 @@ public class Main {
 			System.out.println("6) Curar Pokémon.");
 			System.out.println("7) Guardar.");
 			System.out.println("8) Guardar y Salir.");
-			System.out.println("\n Ingrese su opcion: ");
+			System.out.print(" Ingrese su opcion: ");
 			opcion = s.nextInt(); 
 			s.nextLine();		
 			switch(opcion) {
@@ -272,7 +274,10 @@ public class Main {
     /** Guarda la partida actual en el archivo de registros. */
 	private static void Guardar() {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt"))){
-			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			bw.write(jugador.getNombre());
+			for(String lider : jugador.getDerrotados()) {
+				bw.write(";" + lider);
+			}
 			bw.newLine();
 			for(Pokemon p: jugador.getEquipo()) {
 				bw.write(p.getNombre() + ";" + p.getEstado());
@@ -283,6 +288,8 @@ public class Main {
 				bw.newLine();
 			}
 			System.out.println("Partida guardada!");
+			System.out.println("Nos vemos entrenador...");
+			System.out.println();
 		}catch(IOException e) {
 			System.out.println("Error al guardar partida.");
 		}
@@ -351,6 +358,8 @@ public class Main {
 			System.out.println(g.getNumero() + ") " + g.getLider() + "- Estado: " + g.getEstado());
 		}
 		System.out.println((gimnasios.size() + 1) + ") Volver al menu");
+		System.out.println();
+		System.out.print("Ingrese una opcion: ");
 		int opcion = s.nextInt(); s.nextLine();
 		if(opcion < 1 || opcion > gimnasios.size()) {
 			return;
@@ -362,6 +371,7 @@ public class Main {
 		}
 		
 		System.out.println("Desafiando a " + gym.getLider() + "!!");
+		System.out.println();
 		for(Pokemon pGym : gym.getPokemon()) {
 			Pokemon pJugador = null;
 			for(Pokemon pj : jugador.getEquipo()) {
@@ -380,7 +390,9 @@ public class Main {
 			
 			boolean enCombate= true;
 			while(enCombate && pJugador.estaVivo() && pGym.estaVivo()) {
+				System.out.println();
 				System.out.println("¿Que deseas hacer?\n1) Atacar\n2) Cambiar de Pokemon\n3) Rendirse");
+				System.out.print("Ingrese opcion: ");
 				int accion = s.nextInt();
 				s.nextLine();
 				if(accion == 1) {
@@ -406,8 +418,10 @@ public class Main {
 		    if(!gym.getEstado().equals("Derrotado")) {
 	              gym.setEstado("Derrotado");
 	              jugador.setMedallas(jugador.getMedallas() + 1);
+	              jugador.agregarDerrotado(gym.getLider());
 	              System.out.println("¡Has ganado la medalla de " + gym.getLider() + "!");
 	          }
+		    System.out.println();
 		}
     /** Permite acceder al PC para intercambiar Pokémon entre equipo y PC. */
 	private static void accesoPC() {
@@ -472,10 +486,16 @@ public class Main {
 	}
     /** Permite salir a capturar Pokémon en los hábitats disponibles. */
 	private static void salirCapturar() {
+		System.out.println("Donde deseas ir a explorar?");
+		System.out.println();
 		System.out.println("Zonas disponibles: ");
+		System.out.println();
 		for(int i = 0; i< habitats.size(); i++) {
-			System.out.println((i + 1) + ")" + habitats.get(i).getNombre());
+			System.out.println((i + 1) + ") " + habitats.get(i).getNombre());
 		}
+		System.out.println("7) Volver al menu.");
+		System.out.println();
+		System.out.print("Ingrese Zona: ");
 		int opcion = s.nextInt(); s.nextLine();
 		if(opcion < 1 || opcion > habitats.size()) {
 			return;
@@ -484,19 +504,25 @@ public class Main {
 		Habitat zona = habitats.get(opcion - 1);
 		Pokemon encontrado = zona.generarPokemonA(pokedex);
 		System.out.println("Oh!! Ha aparecido un increible " + encontrado.getNombre() + "!!");
+		System.out.println();
+		System.out.println("Que deseas hacer?");
+		System.out.println();
 		System.out.println("1) Capturar");
 		System.out.println("2) Huir");
+		System.out.print("Ingrese Opcion: ");
 		int decision = s.nextInt(); s.nextLine();
 		if(decision == 1) {
 			if(!jugador.tienePokemon(encontrado.getNombre())) {
 				jugador.agregarPokemon(encontrado);
 				System.out.println(encontrado.getNombre() + " capturado con exito!!");
+				System.out.println(encontrado.getNombre() + " ha sido agregado a tu equipo!");
 			}else {
 				System.out.println("Ya tienes a " + encontrado.getNombre()+ "en tu equipo!");
 			}
 		}else {
 			System.out.println("Has huido...");
 		}
+		System.out.println();
 	}
     /** Muestra el equipo actual del jugador con sus stats y estado. */
 	private static void revisarEquipo() {
@@ -506,7 +532,7 @@ public class Main {
 			System.out.println("Equipo actual: ");
 			int i = 1;
 			for(Pokemon p: jugador.getEquipo()) {
-				System.out.println(i + ")" + p.getNombre() + "|" + p.getTipo() + "|Stats: " + p.CalcularStatsTotal() +"| Estado: " + p.getEstado());
+				System.out.println(i + ") " + p.getNombre() + "|" + p.getTipo() + "|Stats totales: " + p.CalcularStatsTotal() );
 				i++;
 			}
 		}
