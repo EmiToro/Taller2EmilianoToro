@@ -13,6 +13,10 @@ public class AltoMando {
 		this.pokemon = new ArrayList<>();
 	}
 	
+	public int getNumero() {
+		return numero;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
