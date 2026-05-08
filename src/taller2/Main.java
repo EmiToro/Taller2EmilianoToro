@@ -147,7 +147,7 @@ public class Main {
 					//salir = true;
 					break;
 				default:
-					System.out.println("Saliendo y guardando cambios.");
+					System.out.println("Opcion incorrecta, intente nuevamente!!.");
 			}		
 		}while(opcion != 8) ;
 	}
