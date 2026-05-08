@@ -1,14 +1,27 @@
 package taller2;
-
+/**
+ * Clase Combate
+ * Simula una batalla entre dos Pokémon considerando sus estadísticas
+ * y la efectividad de tipos definida en la TablaTipos.
+ */
 public class Combate {
     private Pokemon atacante;
     private Pokemon defensor;
-
+    /**
+     * Constructor de Combate.
+     * @param atacante Pokémon que inicia el ataque.
+     * @param defensor Pokémon que recibe el ataque.
+     */
     public Combate(Pokemon atacante, Pokemon defensor) {
         this.atacante = atacante;
         this.defensor = defensor;
     }
-
+    /**
+     * Simula la batalla entre atacante y defensor.
+     * Calcula los stats totales, aplica multiplicador de tipo y
+     * determina el ganador debilitando al perdedor.
+     * @return Mensaje indicando el resultado del combate.
+     */
     public String simularBatalla() {
         int statsAtacante = atacante.CalcularStatsTotal();
         int statsDefensor = defensor.CalcularStatsTotal();

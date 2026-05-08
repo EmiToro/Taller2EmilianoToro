@@ -1,5 +1,8 @@
 package taller2;
-
+/* Constanza Fernanda Araya Plaza; 21.609.067-8; ICCI
+ * Emiliano Angel Toro Rojas; 21.512.702-8; ITI
+ * 
+ * */
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,7 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Clase Main
+ * Punto de entrada del programa. Contiene el menú inicial y el menú principal
+ * para gestionar la partida del jugador, incluyendo captura de Pokémon,
+ * combates en gimnasios y contra el Alto Mando, acceso al PC y guardado/carga de partidas.
+ */
 public class Main {
 	static ArrayList<Pokemon> pokedex = new ArrayList<>();
 	static ArrayList<Habitat> habitats = new ArrayList<>();
@@ -17,7 +25,11 @@ public class Main {
 	static ArrayList<AltoMando> altoMando = new ArrayList<>();
 	static Scanner s = new Scanner(System.in);
 	static Jugador jugador;
-	
+	/**
+     * Método principal. Muestra el menú inicial para continuar partida,
+     * crear nueva partida o salir del juego.
+     * 
+     */
 	public static void main(String[] args) {
 		leerArchivos();
 		int opcion;
@@ -46,16 +58,19 @@ public class Main {
 				menu2(apodo);
 				break;
 			case 3:
-				
+				System.out.println("Hasta luego!!");
 				break;
 			default:
-				System.out.println();
+				System.out.println("Opcion incorrecta. Intentalo nuevamente!");
 			}
-			
 		}while(opcion!= 3);
-	
 	}
-	
+	/**
+     * Carga una partida desde el archivo de registros.
+     * @param archivo Nombre del archivo de registros.
+     * @param pokedex Lista de Pokémon disponibles.
+     * @return Jugador cargado desde archivo o null si no existe partida.
+     */
 	private static Jugador cargarRegistros(String archivo, ArrayList<Pokemon> pokedex) {
 		try(Scanner sc = new Scanner(new File(archivo))){
 			if(!sc.hasNextLine()) {
@@ -83,7 +98,10 @@ public class Main {
 		}
 		
 	}
-
+	/**
+     * Muestra el menú principal del juego con las opciones de gestión.
+     * @param apodo Nombre del jugador.
+     */
 	private static void menu2(String apodo) {
 		int opcion ;
 		do {
@@ -99,9 +117,7 @@ public class Main {
 			System.out.println("8) Guardar y Salir.");
 			System.out.println("\n Ingrese su opcion: ");
 			opcion = s.nextInt(); 
-			s.nextLine();
-				
-			
+			s.nextLine();		
 			switch(opcion) {
 				case 1:
 					revisarEquipo();
@@ -133,18 +149,18 @@ public class Main {
 			}		
 		}while(opcion != 8) ;
 	}
-
-
-
+	 /**
+     * Lee todos los archivos externos necesarios para inicializar el juego:
+     * Pokedex, Alto Mando, Gimnasios y Hábitats.
+     */
 	private static void leerArchivos() {
 		leerPoxedex("Pokedex.txt");
 		leerAltoMando("Alto Mando.txt");
 		leerGimnasios("Gimnasios.txt");
 		leerHabitats("Habitats.txt");
 	}
-
-
-
+	
+    /** Lee el archivo de la pokedex y carga los Pokémon. */
 	private static void leerPoxedex(String archivo) {
 		try {
 			Scanner sc = new Scanner(new File(archivo));
@@ -170,7 +186,7 @@ public class Main {
 		}
 	
 	}
-
+    /** Lee el archivo del Alto Mando y carga sus miembros y Pokémon. */
 	private static void leerAltoMando(String archivo) {
 		try {
 			Scanner sc = new Scanner(new File(archivo));
@@ -197,8 +213,7 @@ public class Main {
 		}
 	}
 
-
-
+    /** Lee el archivo de gimnasios y carga sus líderes y Pokémon. */
 	private static void leerGimnasios(String archivo) {
 		try {
 			Scanner sc = new Scanner(new File(archivo));
@@ -228,8 +243,7 @@ public class Main {
 		}
 	}
 
-
-
+    /** Busca un Pokémon por nombre en la pokedex. */
 	private static Pokemon buscarPokemon(String nombrePokemon, ArrayList<Pokemon> pokedex) {
 		for(Pokemon p: pokedex) {
 			if(p.getNombre().equalsIgnoreCase(nombrePokemon)) {
@@ -239,8 +253,7 @@ public class Main {
 		return null;
 	}
 
-
-
+    /** Lee el archivo de hábitats y carga las zonas disponibles. */
 	private static void leerHabitats(String archivo) {
 		try {
 			Scanner sc = new Scanner(new File(archivo));
@@ -256,8 +269,7 @@ public class Main {
 	
 	}
 
-
-
+    /** Guarda la partida actual en el archivo de registros. */
 	private static void Guardar() {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt"))){
 			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
@@ -275,12 +287,12 @@ public class Main {
 			System.out.println("Error al guardar partida.");
 		}
 	}
-
+    /** Cura todos los Pokémon del equipo y del PC del jugador. */
 	private static void curarPkm() {
 		jugador.curarEquipo();
 		System.out.println("Tu equipo se ha recuperado!");
 	}
-
+    /** Permite desafiar al Alto Mando si el jugador tiene 8 medallas. */
 	private static void desafiarAltoMando() {
 		if(jugador.getMedallas() < 8) {
 			System.out.println("Debes derrotar  a los 8 gimnasios antes de desafiar al Alto Mando!");
@@ -332,7 +344,7 @@ public class Main {
 				}
 				System.out.println("¡Felicidades! Has derrotado al Alto Mando y eres el campeon!");
 			}
-
+    /** Permite retar a un gimnasio en orden y obtener medallas. */
 	private static void retarGym() {
 		System.out.println("¿A cual lider deseas retar?");
 		for(Gimnasio g: gimnasios) {
@@ -397,7 +409,7 @@ public class Main {
 	              System.out.println("¡Has ganado la medalla de " + gym.getLider() + "!");
 	          }
 		}
-
+    /** Permite acceder al PC para intercambiar Pokémon entre equipo y PC. */
 	private static void accesoPC() {
 	    System.out.println("--- Sistema PC Pokemon --- \n");
 	    System.out.println("-Equipo activo-");
@@ -458,7 +470,7 @@ public class Main {
 	        }
 	    }
 	}
-
+    /** Permite salir a capturar Pokémon en los hábitats disponibles. */
 	private static void salirCapturar() {
 		System.out.println("Zonas disponibles: ");
 		for(int i = 0; i< habitats.size(); i++) {
@@ -486,7 +498,7 @@ public class Main {
 			System.out.println("Has huido...");
 		}
 	}
-
+    /** Muestra el equipo actual del jugador con sus stats y estado. */
 	private static void revisarEquipo() {
 		if(jugador.getEquipo().isEmpty()) {
 			System.out.println("Tu equipo esta vacío. ");

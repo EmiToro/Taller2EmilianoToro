@@ -1,8 +1,20 @@
 package taller2;
-
+/**
+	 * Clase TablaTipos
+	 * Contiene la matriz de efectividad entre tipos de Pokémon y métodos
+	 * para obtener el multiplicador de daño según atacante y defensor.
+	 */
 public class TablaTipos {
-    
-    // Matriz de efectividad
+	
+	/**
+     * Matriz de efectividad entre tipos.
+     * Cada fila representa el tipo del atacante y cada columna el tipo del defensor.
+     * Los valores posibles son:
+     *  - 2.0 → Super efectivo
+     *  - 1.0 → Neutro
+     *  - 0.5 → Poco efectivo
+     *  - 0.0 → Sin efecto
+     */
     private static final double[][] EFECTIVIDAD = {
         // NOR  FUE  AGU  PLA  ELE  HIE  LUC  VEN  TIE  VOL  PSI  BIC  ROC  FAN  DRA  ACE  SIN  HAD
         {  1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.0, 1.0, 0.5, 1.0, 1.0 }, // NORMAL
@@ -24,13 +36,22 @@ public class TablaTipos {
         {  1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5 }, // SINIESTRO
         {  1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 2.0, 1.0 }  // HADA
     };
-    
+    /**
+     * Obtiene el multiplicador de efectividad entre dos tipos.
+     * @param tipoAtacante Tipo del Pokémon atacante.
+     * @param tipoDefensor Tipo del Pokémon defensor.
+     * @return Multiplicador de daño (2.0, 1.0, 0.5 o 0.0).
+     */
     public static double obtenerMultiplicador(String tipoAtacante, String tipoDefensor) {
         int fila = convertirTipoAIndice(tipoAtacante);
         int columna = convertirTipoAIndice(tipoDefensor);
         return EFECTIVIDAD[fila][columna];
     }
-
+    /**
+     * Convierte un tipo de Pokémon en su índice correspondiente dentro de la matriz.
+     * @param tipo Tipo de Pokémon en formato String.
+     * @return Índice numérico asociado al tipo.
+     */
     private static int convertirTipoAIndice(String tipo) {
         switch(tipo.toUpperCase()) {
             case "NORMAL": 
