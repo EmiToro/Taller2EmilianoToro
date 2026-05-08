@@ -476,7 +476,6 @@ public class Main {
 		    s.nextLine();
 	    	
 	    }
-	 
 	    
 	    if(opcion == 1) {
 	        System.out.println("Número del pokemon en el equipo : ");
